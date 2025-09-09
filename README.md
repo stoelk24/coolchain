@@ -1,4 +1,4 @@
-# coolchain-monitoring-RSE-RIZ Gruppe: Fynn Bremer, Tom Stoelken, Alexander Holzenkamp 
+# coolchain-monitoring-RSE-RIZ
  Der Hersteller „Food Solution Hildesheim“ produziert Bio-Dönerspieße. Er bietet seinen Endkunden eine  zertifizierte Kühlkette für alle Produkte an. Die Einhaltung der Kühlkette kann vom Endkunden leicht über  einen QR-Code überprüft werden. 
 
  Für die Kühlkette gelten folgende Rahmenbedingungen: 
