@@ -1,0 +1,70 @@
+import os
+return True, [
+f"Transport nicht abgeschlossen (letztes Event '{events[-1].direction}'). Bisherige Dauer: {duration} (kein Fehler)."
+]
+
+
+if duration > limit:
+return False, [f"Transportdauer > {max_hours}h: {duration}."]
+return True, [f"Transportdauer ok: {duration}."]
+
+
+# ——————————————————————
+# Auswertung
+# ——————————————————————
+
+
+def evaluate_transport(company: str, transportid: str) -> Tuple[bool, List[str]]:
+events = fetch_events(company, transportid)
+messages: List[str] = []
+
+
+if not events:
+return False, ["Es gibt gar keinen Eintrag (keine Events gefunden)."]
+
+
+c_ok, c_msgs = check_consistency(events)
+g_ok, g_msgs = check_hand_over_gaps(events)
+d_ok, d_msgs = check_total_duration(events)
+
+
+ok = c_ok and g_ok and d_ok
+messages.extend(c_msgs + g_msgs + d_msgs)
+
+
+return ok, messages
+
+
+
+
+def main():
+company = os.getenv("COMPANY", "Food Solution Hildesheim")
+
+
+# Beispiel: Liste von Transport-IDs prüfen (kannst du durch argv, Datei oder DB ersetzen)
+# Du kannst auch IDs über die Kommandozeile übergeben: python main.py 123 456 789
+ids = sys.argv[1:] or [
+# Hier kannst du die 20 IDs aus eurer Aufgabenstellung eintragen
+# "72359278599178561029675",
+]
+
+
+if not ids:
+print("Bitte Transport-IDs als Argumente übergeben oder in main() eintragen.")
+sys.exit(0)
+
+
+print(f"Prüfe {len(ids)} Transport(e) für '{company}'\n")
+
+
+for tid in ids:
+ok, msgs = evaluate_transport(company, tid)
+status = "KORREKT" if ok else "FEHLER"
+print(f"Transport-ID {tid}: {status}")
+for m in msgs:
+print(f" - {m}")
+print()
+
+
+if __name__ == "__main__":
+main()
